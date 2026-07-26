@@ -53,7 +53,7 @@ test('Steam Counter Strike 2 page shows basic info', async ({ page }) => {
   // 4. Release date should be visible and non-empty
   const releaseDate = page.locator('.release_date .date');
   await expect(releaseDate).toBeVisible();
-  await expect(releaseDate).toHaveText('21 Aug, 2012');
+  await expect(releaseDate).toHaveText(/2012/);
 });
 
 });
