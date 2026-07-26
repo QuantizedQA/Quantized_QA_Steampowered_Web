@@ -19,7 +19,7 @@ jobs:
   # We keep this informational (warn-only) because the team is learning.
   lint-and-format:
     runs-on: ubuntu-latest
-    continue-on-error: true   # <-- this makes the job "advisory only", it will show a warning icon but won't block merging
+    continue-on-error: true # <-- this makes the job "advisory only", it will show a warning icon but won't block merging
     steps:
       - name: Get the code
         uses: actions/checkout@v4
@@ -61,9 +61,9 @@ jobs:
   # JOB 3: The actual Playwright tests against the live Steam store.
   # This is the real gate. It must pass before merging.
   playwright-tests:
-    needs: [typecheck]   # only runs if typecheck passed, saves time if code is broken
+    needs: [typecheck] # only runs if typecheck passed, saves time if code is broken
     runs-on: ubuntu-latest
-    timeout-minutes: 30    # safety net: kill the job if Steam is slow/unresponsive
+    timeout-minutes: 30 # safety net: kill the job if Steam is slow/unresponsive
     steps:
       - name: Get the code
         uses: actions/checkout@v4
@@ -83,7 +83,7 @@ jobs:
       - name: Run Playwright tests against Steam store
         run: npx playwright test
         env:
-          CI: true   # tells playwright.config.ts to enable retries (2 retries) and reduce workers
+          CI: true # tells playwright.config.ts to enable retries (2 retries) and reduce workers
 
       # Always upload the report, even if tests failed, so the team can see WHY
       - name: Upload test report (always, pass or fail)
