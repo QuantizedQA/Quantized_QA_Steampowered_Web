@@ -1,72 +1,59 @@
-import { test, expect } from '@playwright/test';
-import { HomePage} from '../pages/HomePage';
+import { test, expect } from "@playwright/test";
+import { HomePage } from "../pages/HomePage";
 
 // Verify Store navigation
 
-test('store navigation', async ({page}) => {
-    const homePage = new HomePage(page)
-    
-    await homePage.open();
+test("store navigation", async ({ page }) => {
+  const homePage = new HomePage(page);
 
-    await expect(homePage.storeLink).toBeVisible();
+  await homePage.open();
 
-    await expect(page).toHaveURL('https://store.steampowered.com/');
-    await expect(page).toHaveTitle("Welcome to Steam");
+  await expect(homePage.storeLink).toBeVisible();
 
-
-    
-
+  await expect(page).toHaveURL("https://store.steampowered.com/");
+  await expect(page).toHaveTitle("Welcome to Steam");
 });
 
+// Verify community navigation
 
-    // Verify community navigation
+test("community navigation", async ({ page }) => {
+  const homePage = new HomePage(page);
 
-test('community navigation', async ({page}) => {
-    const homePage = new HomePage(page)
+  await homePage.open();
 
-    await homePage.open();
+  await expect(homePage.communityLink).toBeVisible();
 
-    await expect (homePage.communityLink).toBeVisible();
+  await homePage.clickCommunity();
 
-    await homePage.clickCommunity();
+  await expect(page).toHaveURL("https://steamcommunity.com/");
+  await expect(page).toHaveTitle("Steam Community");
+});
 
-    await expect(page).toHaveURL('https://steamcommunity.com/')
-    await expect(page).toHaveTitle('Steam Community')
+// Verify about navigation
 
-    });
+test("about navigation", async ({ page }) => {
+  const homePage = new HomePage(page);
 
+  await homePage.open();
 
+  await expect(homePage.aboutLink).toBeVisible();
 
-    // Verify about navigation
+  await homePage.clickAbout();
 
-    test('about navigation', async ({page}) => {
+  await expect(page).toHaveURL("https://store.steampowered.com/about/");
+  await expect(page).toHaveTitle("Steam, The Ultimate Online Game Platform");
+});
 
-        const homePage = new HomePage(page)
+// Verify Support navigation
 
-        await homePage.open();
+test("support navigation", async ({ page }) => {
+  const homePage = new HomePage(page);
 
-        await expect(homePage.aboutLink).toBeVisible();
+  await homePage.open();
+  await expect(homePage.supportLink).toBeVisible();
 
-        await homePage.clickAbout();
+  await homePage.clickSupport();
 
-        await expect(page).toHaveURL('https://store.steampowered.com/about/')
-        await expect(page).toHaveTitle('Steam, The Ultimate Online Game Platform')
-
-
-
-    });
-
-
-    // Verify Support navigation
-
-    test('support navigation', async ({page}) => {
-        const homePage = new HomePage(page)
-
-        await homePage.open();
-        await expect(homePage.supportLink).toBeVisible();
-
-        await homePage.clickSupport();
-
-        await expect(page).toHaveURL('https://help.steampowered.com/en/')
-        await expect(page).toHaveTitle('Steam Support')
-    })
+  await expect(page).toHaveURL("https://help.steampowered.com/en/");
+  await expect(page).toHaveTitle("Steam Support");
+});

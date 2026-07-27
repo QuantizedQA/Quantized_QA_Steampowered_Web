@@ -1,4 +1,4 @@
-import{Page, Locator} from '@playwright/test';
+import { Page, Locator } from "@playwright/test";
 
 /**
  * HomePage
@@ -7,29 +7,29 @@ import{Page, Locator} from '@playwright/test';
  * Contains reusable locators and actions for the main navigation.
  */
 
-export class HomePage{
+export class HomePage {
   readonly page: Page;
 
   // Main navigation links
-  readonly storeLink : Locator;
-  readonly communityLink : Locator;
-  readonly aboutLink : Locator;
-  readonly supportLink : Locator;
+  readonly storeLink: Locator;
+  readonly communityLink: Locator;
+  readonly aboutLink: Locator;
+  readonly supportLink: Locator;
 
-  constructor(page :Page){
+  constructor(page: Page) {
     this.page = page;
 
-    this.storeLink= page.getByRole('link',{name: /store/i});
-    this.communityLink = page.getByRole('link',{name: /community/i});
-    this.aboutLink = page.getByRole('link',{name: /about/i});
-    this.supportLink = page.getByRole('link',{name: /support/i});
+    this.storeLink = page.getByRole("link", { name: /store/i });
+    this.communityLink = page.getByRole("link", { name: /community/i });
+    this.aboutLink = page.getByRole("link", { name: /about/i });
+    this.supportLink = page.getByRole("link", { name: /support/i });
   }
 
-    // Opens the Steam homepage
+  // Opens the Steam homepage
 
   async open() {
-    await this.page.goto('https://store.steampowered.com/', {
-      waitUntil : 'domcontentloaded',
+    await this.page.goto("https://store.steampowered.com/", {
+      waitUntil: "domcontentloaded",
     });
   }
 
@@ -48,19 +48,4 @@ export class HomePage{
   async clickSupport() {
     await this.supportLink.click();
   }
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
-
-
