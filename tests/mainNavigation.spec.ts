@@ -1,12 +1,18 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/HomePage";
 
+let homePage: HomePage;
+
+test.beforeEach(async ({ page }) => {
+  homePage = new HomePage(page);
+
+  await homePage.open();
+});
+
 // Verify Store navigation
 
 test("store navigation", async ({ page }) => {
-  const homePage = new HomePage(page);
-
-  await homePage.open();
+  await homePage.clickStore();
 
   await expect(homePage.storeLink).toBeVisible();
 
@@ -17,10 +23,6 @@ test("store navigation", async ({ page }) => {
 // Verify community navigation
 
 test("community navigation", async ({ page }) => {
-  const homePage = new HomePage(page);
-
-  await homePage.open();
-
   await expect(homePage.communityLink).toBeVisible();
 
   await homePage.clickCommunity();
@@ -32,10 +34,6 @@ test("community navigation", async ({ page }) => {
 // Verify about navigation
 
 test("about navigation", async ({ page }) => {
-  const homePage = new HomePage(page);
-
-  await homePage.open();
-
   await expect(homePage.aboutLink).toBeVisible();
 
   await homePage.clickAbout();
@@ -47,9 +45,6 @@ test("about navigation", async ({ page }) => {
 // Verify Support navigation
 
 test("support navigation", async ({ page }) => {
-  const homePage = new HomePage(page);
-
-  await homePage.open();
   await expect(homePage.supportLink).toBeVisible();
 
   await homePage.clickSupport();

@@ -19,7 +19,7 @@ export class HomePage {
   constructor(page: Page) {
     this.page = page;
 
-    this.storeLink = page.getByRole("link", { name: /store/i });
+    this.storeLink = page.getByRole("link", { name: "STORE", exact: true });
     this.communityLink = page.getByRole("link", { name: /community/i });
     this.aboutLink = page.getByRole("link", { name: /about/i });
     this.supportLink = page.getByRole("link", { name: /support/i });
