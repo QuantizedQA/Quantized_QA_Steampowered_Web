@@ -20,9 +20,12 @@ export class HomePage {
     this.page = page;
 
     this.storeLink = page.getByRole("link", { name: "STORE", exact: true });
-    this.communityLink = page.getByRole("link", { name: /community/i });
-    this.aboutLink = page.getByRole("link", { name: /about/i });
-    this.supportLink = page.getByRole("link", { name: /support/i });
+    this.communityLink = page.getByRole("link", {
+      name: "COMMUNITY",
+      exact: true,
+    });
+    this.aboutLink = page.getByRole("link", { name: "About", exact: true });
+    this.supportLink = page.getByRole("link", { name: "SUPPORT", exact: true });
   }
 
   // Opens the Steam homepage
