@@ -11,6 +11,7 @@ export class HomePage {
   readonly page: Page;
 
   // Main navigation links
+  readonly nav: Locator;
   readonly storeLink: Locator;
   readonly communityLink: Locator;
   readonly aboutLink: Locator;
@@ -19,13 +20,27 @@ export class HomePage {
   constructor(page: Page) {
     this.page = page;
 
-    this.storeLink = page.getByRole("link", { name: "STORE", exact: true });
-    this.communityLink = page.getByRole("link", {
+    this.nav = page.getByRole("navigation", { name: "Global Menu" });
+
+    this.storeLink = this.nav.getByRole("link", {
+      name: "STORE",
+      exact: true,
+    });
+
+    this.communityLink = this.nav.getByRole("link", {
       name: "COMMUNITY",
       exact: true,
     });
-    this.aboutLink = page.getByRole("link", { name: "About", exact: true });
-    this.supportLink = page.getByRole("link", { name: "SUPPORT", exact: true });
+
+    this.aboutLink = this.nav.getByRole("link", {
+      name: "About",
+      exact: true,
+    });
+
+    this.supportLink = this.nav.getByRole("link", {
+      name: "SUPPORT",
+      exact: true,
+    });
   }
 
   // Opens the Steam homepage
