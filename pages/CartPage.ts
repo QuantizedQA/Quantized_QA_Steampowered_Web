@@ -1,5 +1,6 @@
-import test, { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 import { CONFIG } from "../config/config";
+
 
 export class CartPage {
   readonly page: Page;
@@ -20,14 +21,15 @@ export class CartPage {
       .getByRole("button")
       .filter({ has: page.getByRole("combobox") });
     this.cartItemName = this.cartItem.getByText("Palworld");
-    this.cartItemPrice = this.cartItem.getByText("$29.99");
+    // Match the price format instead of a specific value to support different locales and price changes.
+    this.cartItemPrice = this.cartItem.getByText(/^\D*\d+[.,]\d{2}\D*$/);
   }
 
   // Check if there are items already in cart, if yes, clear the cart
   async ensureEmptyCart(): Promise<void> {
     await this.page.goto(CONFIG.CART_URL, {
       waitUntil: "domcontentloaded",
-      timeout: 1000_000,
+      timeout: CONFIG.TIMEOUT.LONG,
     });
 
     // Wait until the network is idle.
