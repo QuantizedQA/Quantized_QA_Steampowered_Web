@@ -1,7 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CONFIG } from "../config/config";
 
-
 export class CartPage {
   readonly page: Page;
   readonly emptyCart: Locator;

@@ -51,7 +51,6 @@ export class AddToCartPage {
     await this.purchaseSection.waitFor();
     await this.itemName.waitFor();
 
-    
     const title = (await this.itemName.innerText()).trim();
 
     return title;
