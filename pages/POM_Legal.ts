@@ -16,12 +16,10 @@ export class POM_Legal {
   };
 
   // Locators
-  readonly footerContainer: Locator;
   readonly storeReportLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.footerContainer = page.locator('#footer_content, #footer, .footer_content');
     this.storeReportLink = page.getByRole('link', { name: 'Valve Accessibility Compliance Report - Steam Store' });
   }
 
@@ -36,7 +34,9 @@ export class POM_Legal {
 
   async clickFooterLink(selector: string, context: any) {
     await this.scrollToFooter();
-    const link = this.footerContainer.locator(selector).first();
+    
+    // Search directly on page to avoid responsive container mismatches
+    const link = this.page.locator(selector).first();
     await expect(link).toBeVisible({ timeout: 10000 });
 
     const pagePromise = context.waitForEvent('page').catch(() => null);

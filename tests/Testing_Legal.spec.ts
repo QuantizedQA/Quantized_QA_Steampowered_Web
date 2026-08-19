@@ -7,37 +7,37 @@ test.describe('Steam Footer Links - User Flow', () => {
   const footerLinkTests = [
     {
       name: 'Privacy Policy',
-      selector: 'a[href*="privacy_agreement"], a:has-text("Privacy")',
+      selector: 'a[href*="privacy_agreement"]:visible, a:has-text("Privacy"):visible',
       expectedHeader: /privacy policy/i,
       getUrl: (pom: POM_Legal) => pom.urls.PRIVACY,
     },
     {
       name: 'Accessibility',
-      selector: 'a[href*="accessibility"], a:has-text("Accessibility")',
+      selector: 'a[href*="accessibility"]:visible, a:has-text("Accessibility"):visible',
       expectedHeader: /accessibility/i,
       getUrl: (pom: POM_Legal) => pom.urls.ACCESSIBILITY_PAGE,
     },
     {
       name: 'Notices & Policies',
-      selector: 'a[href*="legal"], a:has-text("Notices"), a:has-text("Legal")',
+      selector: 'a[href*="legal"]:visible, a:has-text("Notices"):visible',
       expectedHeader: /legal info|notices/i,
       getUrl: (pom: POM_Legal) => pom.urls.LEGAL,
     },
     {
       name: 'Subscriber Agreement',
-      selector: 'a[href*="subscriber_agreement"], a:has-text("Subscriber Agreement")',
+      selector: 'a[href*="subscriber_agreement"]:visible, a:has-text("Subscriber Agreement"):visible',
       expectedHeader: /subscriber agreement/i,
       getUrl: (pom: POM_Legal) => pom.urls.SUBSCRIBER_AGREEMENT,
     },
     {
       name: 'Refunds',
-      selector: 'a[href*="steam_refunds"], a:has-text("Refunds")',
+      selector: 'a[href*="steam_refunds"]:visible, a:has-text("Refunds"):visible',
       expectedHeader: /steam refunds|refunds/i,
       getUrl: (pom: POM_Legal) => pom.urls.REFUNDS,
     },
     {
       name: 'Cookie Preferences',
-      selector: 'a[href*="cookiepreferences"], a:has-text("Cookies")',
+      selector: 'a[href*="cookiepreferences"]:visible, a:has-text("Cookies"):visible',
       expectedHeader: /cookies & browsing|cookie/i,
       getUrl: (pom: POM_Legal) => pom.urls.COOKIES,
     },
@@ -78,7 +78,7 @@ test.describe('Steam Footer Links - User Flow', () => {
     const pomLegal = new POM_Legal(page);
 
     await pomLegal.navigateToHome();
-    const targetPage = await pomLegal.clickFooterLink('a[href*="privacy_agreement"], a:has-text("Privacy")', context);
+    const targetPage = await pomLegal.clickFooterLink('a[href*="privacy_agreement"]:visible, a:has-text("Privacy"):visible', context);
 
     // Handle language selection specifically on the Privacy Policy page
     const spanishLink = targetPage.locator('#languages a[href*="spanish"], .privacy_policy_languages a[href*="spanish"], a[href*="privacy_agreement/spanish"]').first();
