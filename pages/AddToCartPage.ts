@@ -41,7 +41,8 @@ export class AddToCartPage {
     this.confirmedItemName = this.confirmationPop.getByText("Palworld");
 
     // Confirmation item price
-    this.confirmedItemPrice = this.confirmationPop.getByText(/^\D*\d+[.,]\d{2}\D*$/,);
+    this.confirmedItemPrice =
+      this.confirmationPop.getByText(/^\D*\d+[.,]\d{2}\D*$/);
   }
 
   // Get the item name
