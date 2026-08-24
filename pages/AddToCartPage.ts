@@ -29,7 +29,7 @@ export class AddToCartPage {
     this.itemPrice = this.purchaseSection.locator(".game_purchase_price.price");
 
     // Item name
-    this.itemName = this.page.locator("#appHubAppName");
+    this.itemName = page.locator("#appHubAppName");
 
     // Confirmation popup
     this.confirmationPop = page.getByRole("dialog");
@@ -47,20 +47,12 @@ export class AddToCartPage {
 
   // Get the item name
   async getItemName(): Promise<string> {
-    await this.purchaseSection.waitFor();
-    await this.itemName.waitFor();
-
-    const title = (await this.itemName.innerText()).trim();
-
-    return title;
+    return (await this.itemName.innerText()).trim();
   }
 
   // Get the item price
   async getItemPrice(): Promise<string> {
-    await this.itemPrice.waitFor();
-    const price = (await this.itemPrice.innerText()).trim();
-
-    return price;
+    return (await this.itemPrice.innerText()).trim();
   }
 
   // Click Add to Cart button
@@ -74,13 +66,10 @@ export class AddToCartPage {
     finalName: string;
     finalPrice: string;
   }> {
-    await this.successfulTip.waitFor();
     const successfulTip = (await this.successfulTip.innerText()).trim();
 
-    await this.confirmedItemName.waitFor();
     const finalName = (await this.confirmedItemName.innerText()).trim();
 
-    await this.confirmedItemPrice.waitFor();
     const finalPrice = (await this.confirmedItemPrice.innerText()).trim();
 
     return { successfulTip, finalName, finalPrice };

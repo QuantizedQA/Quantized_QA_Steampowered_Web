@@ -8,22 +8,21 @@ test.describe("Add to Cart", () => {
     const cartPage = new CartPage(page);
     const addToCartPage = new AddToCartPage(page);
 
-    // // Check if there are items already in cart, if yes, clear the cart
+    // Check if there are items already in cart, if yes, clear the cart
     await cartPage.ensureEmptyCart();
 
     // Go to the game detail page
     await page.goto(CONFIG.BASE_URL, {
       waitUntil: "domcontentloaded",
-      timeout: 60_000,
     });
 
-    // Get the item nama, price and click the add to cart button
+    // Get the item name and price
     const expectedItemName = await addToCartPage.getItemName();
     const expectedItemPrice = await addToCartPage.getItemPrice();
 
     await addToCartPage.clickAddToCart();
 
-    // Assert the tip, name, price
+    // Assert the tip, name, and price
     const confirmation = await addToCartPage.getConfirmation();
 
     expect(confirmation.successfulTip).toBe("Added to your cart!");
