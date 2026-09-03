@@ -28,7 +28,7 @@ export class AddToCartPage {
     });
 
     // Locate the product price on the product page
-    this.itemPrice = this.purchaseSection.locator(".game_purchase_price.price");
+    this.itemPrice = this.purchaseSection.locator(".discount_final_price");
 
     // Locate the confirmation dialog after adding to cart
     this.confirmationPop = page.getByRole("dialog");
