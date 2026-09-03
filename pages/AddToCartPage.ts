@@ -13,7 +13,6 @@ export class AddToCartPage {
   readonly confirmedItemName: Locator;
   readonly confirmedItemPrice: Locator;
 
-
   constructor(page: Page, itemName: string) {
     this.page = page;
 
@@ -41,15 +40,15 @@ export class AddToCartPage {
     this.confirmedItemName = this.confirmationPop.getByText(itemName);
 
     // Locate the added game's price
-    this.confirmedItemPrice = this.confirmationPop.locator(".game_purchase_price");
+    this.confirmedItemPrice = this.confirmationPop.locator(
+      ".game_purchase_price",
+    );
   }
-
 
   // Get product price for comparison with cart price
   async getItemPrice(): Promise<string> {
     return (await this.itemPrice.innerText()).trim();
   }
-
 
   // Click Add to Cart button
   async clickAddToCart(): Promise<void> {

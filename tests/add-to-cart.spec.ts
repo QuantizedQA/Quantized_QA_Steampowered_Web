@@ -25,13 +25,12 @@ test.describe("Add to Cart", () => {
     await addToCartPage.clickAddToCart();
 
     // Assert the confirmation message, item name, and price
-    await expect(addToCartPage.successfulTip)
-      .toHaveText("Added to your cart!");
+    await expect(addToCartPage.successfulTip).toHaveText("Added to your cart!");
 
-    await expect(addToCartPage.confirmedItemName)
-      .toHaveText(game.name);
+    await expect(addToCartPage.confirmedItemName).toHaveText(game.name);
 
-    await expect(addToCartPage.confirmedItemPrice)
-      .toHaveText(expectedItemPrice);
+    await expect(addToCartPage.confirmedItemPrice).toHaveText(
+      expectedItemPrice,
+    );
   });
 });

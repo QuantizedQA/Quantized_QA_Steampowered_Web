@@ -15,12 +15,14 @@ export class CartPage {
 
     this.emptyCart = page.getByText("Your cart is empty.");
 
-    this.clearCartbtn = page.getByRole("button", {name: "Remove all items",});
+    this.clearCartbtn = page.getByRole("button", { name: "Remove all items" });
 
     this.viewCart = page.getByRole("button", { name: /^View My Cart/ });
 
     // Get the first item region in cart
-    this.cartItem = page.getByRole("button").filter({ has: page.getByRole("combobox") });
+    this.cartItem = page
+      .getByRole("button")
+      .filter({ has: page.getByRole("combobox") });
 
     // Locate cart item name dynamically
     this.cartItemName = this.cartItem.getByText(itemName);
