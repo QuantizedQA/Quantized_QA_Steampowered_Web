@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator, expect, BrowserContext } from "@playwright/test";
 
 export class POM_Legal {
   readonly page: Page;
@@ -39,7 +39,7 @@ export class POM_Legal {
     );
   }
 
-  async clickFooterLink(selector: string, context: any) {
+  async clickFooterLink(selector: string, context: BrowserContext) {
     await this.scrollToFooter();
 
     // Search directly on page to avoid responsive container mismatches
