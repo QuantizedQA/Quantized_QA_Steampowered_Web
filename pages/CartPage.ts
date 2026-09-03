@@ -28,7 +28,7 @@ export class CartPage {
     this.cartItemName = this.cartItem.getByText(itemName);
 
     // Locate cart item price
-    this.cartItemPrice = this.cartItem.locator(".price");
+    this.cartItemPrice = this.cartItem.locator(".StoreOriginalPrice + div");
   }
 
   // Check if there are items already in cart, if yes, clear the cart

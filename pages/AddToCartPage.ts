@@ -41,7 +41,7 @@ export class AddToCartPage {
 
     // Locate the added game's price
     this.confirmedItemPrice = this.confirmationPop.locator(
-      ".game_purchase_price",
+      ".StoreOriginalPrice + div",
     );
   }
 
