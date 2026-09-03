@@ -1,24 +1,24 @@
 import { test, expect } from "@playwright/test";
 import { AddToCartPage } from "../pages/AddToCartPage";
-import { CONFIG } from "../config/config";
 import { CartPage } from "../pages/CartPage";
+import { games } from "../data/games";
 
-test.describe("Add to Cart", () => {
+test.describe("View Cart", () => {
   test("Cart item detail verification", async ({ page }) => {
-    const cartPage = new CartPage(page);
-    const addToCartPage = new AddToCartPage(page);
+    const game = games.palworld;
+
+    const cartPage = new CartPage(page, game.name);
+    const addToCartPage = new AddToCartPage(page, game.name);
 
     // Ensure the cart is empty
     await cartPage.ensureEmptyCart();
 
     // Open game details page
-    await page.goto(CONFIG.BASE_URL, {
+    await page.goto(game.url, {
       waitUntil: "domcontentloaded",
-      timeout: 60_000,
     });
 
-    // Get expected values
-    const expectedItemName = await addToCartPage.getItemName();
+    // Get expected price
     const expectedItemPrice = await addToCartPage.getItemPrice();
 
     // Add to cart
@@ -27,16 +27,9 @@ test.describe("Add to Cart", () => {
     // Go to cart
     await cartPage.viewCart.click();
 
-    // Get actual values
-    const { finalCartItemName, finalCartItemPrice } =
-      await cartPage.getCartItemInfo();
-    console.log("Expected Name:", expectedItemName);
-    console.log("Expected Price:", expectedItemPrice);
+    // Verify cart item details
+    await expect(cartPage.cartItemName).toHaveText(game.name);
 
-    console.log("Actual Name:", finalCartItemName);
-    console.log("Actual Price:", finalCartItemPrice);
-    // Verify
-    expect(finalCartItemName).toBe(expectedItemName);
-    expect(finalCartItemPrice).toBe(expectedItemPrice);
+    await expect(cartPage.cartItemPrice).toHaveText(expectedItemPrice);
   });
 });

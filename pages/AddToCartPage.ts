@@ -2,76 +2,57 @@ import { Page, Locator } from "@playwright/test";
 
 export class AddToCartPage {
   readonly page: Page;
+
   readonly addToCartBtn: Locator;
   readonly purchaseSection: Locator;
-  readonly itemName: Locator;
+
   readonly itemPrice: Locator;
+
   readonly confirmationPop: Locator;
   readonly successfulTip: Locator;
   readonly confirmedItemName: Locator;
   readonly confirmedItemPrice: Locator;
 
-  constructor(page: Page) {
+
+  constructor(page: Page, itemName: string) {
     this.page = page;
 
-    // Palworld purchase section
+    // Locate the purchase section for the selected game
     this.purchaseSection = page.getByRole("region", {
-      name: "Buy Palworld",
+      name: `Buy ${itemName}`,
       exact: true,
     });
 
-    // Add to cart button
+    // Locate the Add to Cart button
     this.addToCartBtn = this.purchaseSection.getByRole("button", {
       name: "Add to Cart",
     });
 
-    // Item price
+    // Locate the product price on the product page
     this.itemPrice = this.purchaseSection.locator(".game_purchase_price.price");
 
-    // Item name
-    this.itemName = page.locator("#appHubAppName");
-
-    // Confirmation popup
+    // Locate the confirmation dialog after adding to cart
     this.confirmationPop = page.getByRole("dialog");
 
-    // Successful tip
+    // Verify the success message
     this.successfulTip = this.confirmationPop.getByText("Added to your cart!");
 
-    // Confirmation item name
-    this.confirmedItemName = this.confirmationPop.getByText("Palworld");
+    // Verify the added game's name
+    this.confirmedItemName = this.confirmationPop.getByText(itemName);
 
-    // Confirmation item price
-    this.confirmedItemPrice =
-      this.confirmationPop.getByText(/^\D*\d+[.,]\d{2}\D*$/);
+    // Locate the added game's price
+    this.confirmedItemPrice = this.confirmationPop.locator(".game_purchase_price");
   }
 
-  // Get the item name
-  async getItemName(): Promise<string> {
-    return (await this.itemName.innerText()).trim();
-  }
 
-  // Get the item price
+  // Get product price for comparison with cart price
   async getItemPrice(): Promise<string> {
     return (await this.itemPrice.innerText()).trim();
   }
 
+
   // Click Add to Cart button
   async clickAddToCart(): Promise<void> {
     await this.addToCartBtn.click();
-  }
-
-  // Get the confirmation data to assert
-  async getConfirmation(): Promise<{
-    successfulTip: string;
-    finalName: string;
-    finalPrice: string;
-  }> {
-    const successfulTip = (await this.successfulTip.innerText()).trim();
-
-    const finalName = (await this.confirmedItemName.innerText()).trim();
-
-    const finalPrice = (await this.confirmedItemPrice.innerText()).trim();
-
-    return { successfulTip, finalName, finalPrice };
   }
 }

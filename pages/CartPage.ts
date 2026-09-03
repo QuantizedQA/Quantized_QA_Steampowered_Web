@@ -10,24 +10,23 @@ export class CartPage {
   readonly cartItemName: Locator;
   readonly cartItemPrice: Locator;
 
-  constructor(page: Page) {
+  constructor(page: Page, itemName: string) {
     this.page = page;
+
     this.emptyCart = page.getByText("Your cart is empty.");
-    this.clearCartbtn = page.getByRole("button", {
-      name: "Remove all items",
-    });
+
+    this.clearCartbtn = page.getByRole("button", {name: "Remove all items",});
+
     this.viewCart = page.getByRole("button", { name: /^View My Cart/ });
 
     // Get the first item region in cart
-    this.cartItem = page
-      .getByRole("button")
-      .filter({ has: page.getByRole("combobox") });
+    this.cartItem = page.getByRole("button").filter({ has: page.getByRole("combobox") });
 
-    this.cartItemName = this.cartItem.getByText("Palworld");
+    // Locate cart item name dynamically
+    this.cartItemName = this.cartItem.getByText(itemName);
 
-    // Match the price format instead of a specific value
-    // to support different locales and price changes.
-    this.cartItemPrice = this.cartItem.getByText(/^\D*\d+[.,]\d{2}\D*$/);
+    // Locate cart item price
+    this.cartItemPrice = this.cartItem.locator(".price");
   }
 
   // Check if there are items already in cart, if yes, clear the cart
@@ -47,21 +46,5 @@ export class CartPage {
 
     await this.clearCartbtn.click();
     await expect(this.emptyCart).toBeVisible();
-  }
-
-  async getCartItemInfo(): Promise<{
-    finalCartItemName: string;
-    finalCartItemPrice: string;
-  }> {
-    const finalCartItemName =
-      (await this.cartItemName.textContent())?.trim() ?? "";
-
-    const finalCartItemPrice =
-      (await this.cartItemPrice.textContent())?.trim() ?? "";
-
-    return {
-      finalCartItemName,
-      finalCartItemPrice,
-    };
   }
 }
