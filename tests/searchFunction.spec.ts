@@ -10,7 +10,7 @@ test.describe("Search Functionality", () => {
     // find search field
     const searchInput = page.getByPlaceholder("Search the store");
     // fill search field with a game called Portal
-    searchInput.fill("Portal");
+    await searchInput.fill("Portal");
     // press Enter
     await searchInput.press("Enter");
     // page has correct URL
@@ -19,7 +19,7 @@ test.describe("Search Functionality", () => {
     );
     // assert that the search results grid is visible
     const resultList = page.locator("#search_results");
-    expect(resultList).toBeDefined();
+    await expect(resultList).toBeVisible();
     // assert all results contain 'portal'
     const searchItems = page.locator(".search_name > .title");
     const allTexts = await searchItems.allTextContents();
