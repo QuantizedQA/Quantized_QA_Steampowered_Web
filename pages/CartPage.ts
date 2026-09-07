@@ -19,7 +19,7 @@ export class CartPage {
 
     this.viewCart = page.getByRole("button", { name: /^View My Cart/ });
 
-    // Get the first item region in cart
+    // Get the item region in cart
     this.cartItem = page
       .getByRole("button")
       .filter({ has: page.getByRole("combobox") });
@@ -28,7 +28,7 @@ export class CartPage {
     this.cartItemName = this.cartItem.getByText(itemName);
 
     // Locate cart item price
-    this.cartItemPrice = this.cartItem.locator(".StoreOriginalPrice + div");
+    this.cartItemPrice = this.cartItem.getByText(/^\$\d+(\.\d{2})?$/).last();
   }
 
   // Check if there are items already in cart, if yes, clear the cart
