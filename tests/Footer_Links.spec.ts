@@ -18,7 +18,7 @@ test.describe("Steam Footer Links - User Flow", () => {
         'a[href*="accessibility"]:visible, a:has-text("Accessibility"):visible',
       expectedHeader: /accessibility/i,
       expectedBody:
-        /valve is committed|voluntary product accessibility template|vpat/i,
+        /voluntary product accessibility template|web content accessibility guidelines|wcag|conformance/i,
       getUrl: (pom: POM_Legal) => pom.urls.ACCESSIBILITY_PAGE,
     },
     {
@@ -71,18 +71,20 @@ test.describe("Steam Footer Links - User Flow", () => {
       // 3. Verify target URL using central POM links
       await expect(targetPage).toHaveURL(item.getUrl(pomLegal));
 
-      // 4. Verify page header content
+      // 4. Verify page header content (without using 'body')
       const pageHeader = targetPage
         .locator(
-          "h1, h2, .privacy_header_title, .faq_title, .faq_page_header, #main_content, .page_sub_header",
+          "h1, h2, h3, .privacy_header_title, .faq_title, .faq_page_header, .faq_header, .help_header, .help_center_header_text, #help_center_header, .page_sub_header, [class*='header']",
         )
         .filter({ hasText: item.expectedHeader })
         .first();
       await expect(pageHeader).toBeVisible();
 
-      // 5. Verify page body content
+      // 5. Verify page body content using container class with leading underscore (without using 'body')
       const pageBody = targetPage
-        .locator("#main_content, #news_column, .privacy_policy_content")
+        .locator(
+          "#main_content, #news_column, .privacy_policy_content, ._2PQsW53YUsH-Z6TICGEF3K, [class*='2PQsW53YUsH']",
+        )
         .filter({ hasText: item.expectedBody })
         .first();
       await expect(pageBody).toBeVisible();
@@ -127,16 +129,18 @@ test.describe("Steam Footer Links - User Flow", () => {
 
     await expect(targetPage).toHaveURL(pomLegal.urls.PRIVACY_SPANISH);
 
-    // Verify Spanish header
+    // Verify Spanish header (without 'body')
     const spanishHeader = targetPage
-      .locator("h1, h2, .privacy_header_title, body")
+      .locator("h1, h2, h3, .privacy_header_title")
       .filter({ hasText: /política de privacidad/i })
       .first();
     await expect(spanishHeader).toBeVisible();
 
-    // Verify Spanish body content
+    // Verify Spanish body content (without 'body')
     const spanishBody = targetPage
-      .locator("body")
+      .locator(
+        "#main_content, .privacy_policy_content, ._2PQsW53YUsH-Z6TICGEF3K",
+      )
       .filter({ hasText: /datos personales|información/i })
       .first();
     await expect(spanishBody).toBeVisible();
