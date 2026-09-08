@@ -74,7 +74,7 @@ test.describe("Steam Footer Links - User Flow", () => {
       // 4. Verify page header content
       const pageHeader = targetPage
         .locator(
-          "h1, h2, .privacy_header_title, .faq_title, #main_content, .page_sub_header, body",
+          "h1, h2, .privacy_header_title, .faq_title, #main_content, .page_sub_header",
         )
         .filter({ hasText: item.expectedHeader })
         .first();
@@ -82,7 +82,7 @@ test.describe("Steam Footer Links - User Flow", () => {
 
       // 5. Verify page body content
       const pageBody = targetPage
-        .locator("body, #main_content, #news_column, .privacy_policy_content")
+        .locator("#main_content, #news_column, .privacy_policy_content")
         .filter({ hasText: item.expectedBody })
         .first();
       await expect(pageBody).toBeVisible();
