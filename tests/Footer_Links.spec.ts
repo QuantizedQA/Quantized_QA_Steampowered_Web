@@ -74,7 +74,7 @@ test.describe("Steam Footer Links - User Flow", () => {
       // 4. Verify page header content
       const pageHeader = targetPage
         .locator(
-          "h1, h2, .privacy_header_title, .faq_title, #main_content, .page_sub_header",
+          "h1, h2, .privacy_header_title, .faq_title, .faq_page_header, #main_content, .page_sub_header",
         )
         .filter({ hasText: item.expectedHeader })
         .first();
