@@ -2,12 +2,9 @@ import { Page, Locator } from "@playwright/test";
 
 export class AddToCartPage {
   readonly page: Page;
-
   readonly addToCartBtn: Locator;
   readonly purchaseSection: Locator;
-
   readonly itemPrice: Locator;
-
   readonly confirmationPop: Locator;
   readonly successfulTip: Locator;
   readonly confirmedItemName: Locator;
@@ -27,7 +24,7 @@ export class AddToCartPage {
       name: "Add to Cart",
     });
 
-    // Locate the product price on the product page
+    // Support both discounted and regular-price games
     this.itemPrice = this.purchaseSection.locator(
       ".discount_final_price, .game_purchase_price",
     );

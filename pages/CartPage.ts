@@ -14,9 +14,7 @@ export class CartPage {
     this.page = page;
 
     this.emptyCart = page.getByText("Your cart is empty.");
-
     this.clearCartbtn = page.getByRole("button", { name: "Remove all items" });
-
     this.viewCart = page.getByRole("button", { name: /^View My Cart/ });
 
     // Get the item region in cart
@@ -33,18 +31,14 @@ export class CartPage {
 
   // Check if there are items already in cart, if yes, clear the cart
   async ensureEmptyCart(): Promise<void> {
-    await this.page.goto(CONFIG.CART_URL, {
-      waitUntil: "domcontentloaded",
-    });
+    await this.page.goto(CONFIG.CART_URL, { waitUntil: "domcontentloaded" });
 
     await Promise.race([
       this.emptyCart.waitFor({ state: "visible" }),
       this.clearCartbtn.waitFor({ state: "visible" }),
     ]);
 
-    if (await this.emptyCart.isVisible()) {
-      return;
-    }
+    if (await this.emptyCart.isVisible()) return;
 
     await this.clearCartbtn.click();
     await expect(this.emptyCart).toBeVisible();
