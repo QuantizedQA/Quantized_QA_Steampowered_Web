@@ -6,13 +6,16 @@ export class POM_Legal {
   // Centralized URLs
   readonly urls = {
     HOME: "https://store.steampowered.com/",
-    ACCESSIBILITY_PAGE: "https://help.steampowered.com/en/faqs/view/10BB-D27A-6378-4436",
+    ACCESSIBILITY_PAGE:
+      "https://help.steampowered.com/en/faqs/view/10BB-D27A-6378-4436",
     PRIVACY: "https://store.steampowered.com/privacy_agreement/",
     LEGAL: "https://store.steampowered.com/legal/",
-    SUBSCRIBER_AGREEMENT: "https://store.steampowered.com/subscriber_agreement/",
+    SUBSCRIBER_AGREEMENT:
+      "https://store.steampowered.com/subscriber_agreement/",
     REFUNDS: "https://store.steampowered.com/steam_refunds/",
     COOKIES: "https://store.steampowered.com/account/cookiepreferences/",
-    PRIVACY_SPANISH: "https://store.steampowered.com/privacy_agreement/spanish/",
+    PRIVACY_SPANISH:
+      "https://store.steampowered.com/privacy_agreement/spanish/",
   };
 
   // Locators
@@ -60,12 +63,17 @@ export class POM_Legal {
     await this.page.goto(this.urls.ACCESSIBILITY_PAGE, {
       waitUntil: "domcontentloaded",
     });
-    
+
     // Target the download asset via its explicit accessibility role mapping
-    const fallbackReportLink = this.page.getByRole("link", { name: /accessibility compliance report/i }).first();
-    
+    const fallbackReportLink = this.page
+      .getByRole("link", { name: /accessibility compliance report/i })
+      .first();
+
     // Cascade evaluation across primary property locator and text fallbacks seamlessly
-    const activeLink = (await this.storeReportLink.count()) > 0 ? this.storeReportLink : fallbackReportLink;
+    const activeLink =
+      (await this.storeReportLink.count()) > 0
+        ? this.storeReportLink
+        : fallbackReportLink;
     await expect(activeLink).toBeVisible({ timeout: 10000 });
 
     const [download] = await Promise.all([
