@@ -6,19 +6,16 @@ test.describe("Steam Footer Links - User Flow", () => {
   const footerLinkTests = [
     {
       name: "Privacy Policy",
-      selector:
-        'a[href*="privacy_agreement"]:visible, a:has-text("Privacy"):visible',
+      selector: 'a[href*="privacy_agreement"]:visible, a:has-text("Privacy"):visible',
       expectedHeader: /privacy policy/i,
       expectedBody: /valve corporation|personal data|privacy policy/i,
       getUrl: (pom: POM_Legal) => pom.urls.PRIVACY,
     },
     {
       name: "Accessibility",
-      selector:
-        'a[href*="accessibility"]:visible, a:has-text("Accessibility"):visible',
+      selector: 'a[href*="accessibility"]:visible, a:has-text("Accessibility"):visible',
       expectedHeader: /accessibility/i,
-      expectedBody:
-        /voluntary product accessibility template|web content accessibility guidelines|wcag|conformance/i,
+      expectedBody: /voluntary product accessibility template|web content accessibility guidelines|wcag|conformance/i,
       getUrl: (pom: POM_Legal) => pom.urls.ACCESSIBILITY_PAGE,
     },
     {
@@ -30,24 +27,21 @@ test.describe("Steam Footer Links - User Flow", () => {
     },
     {
       name: "Subscriber Agreement",
-      selector:
-        'a[href*="subscriber_agreement"]:visible, a:has-text("Subscriber Agreement"):visible',
+      selector: 'a[href*="subscriber_agreement"]:visible, a:has-text("Subscriber Agreement"):visible',
       expectedHeader: /subscriber agreement/i,
       expectedBody: /steam account|agreement|steam services/i,
       getUrl: (pom: POM_Legal) => pom.urls.SUBSCRIBER_AGREEMENT,
     },
     {
       name: "Refunds",
-      selector:
-        'a[href*="steam_refunds"]:visible, a:has-text("Refunds"):visible',
+      selector: 'a[href*="steam_refunds"]:visible, a:has-text("Refunds"):visible',
       expectedHeader: /steam refunds|refunds/i,
       expectedBody: /14 days|two hours|valve will/i,
       getUrl: (pom: POM_Legal) => pom.urls.REFUNDS,
     },
     {
       name: "Cookie Preferences",
-      selector:
-        'a[href*="cookiepreferences"]:visible, a:has-text("Cookies"):visible',
+      selector: 'a[href*="cookiepreferences"]:visible, a:has-text("Cookies"):visible',
       expectedHeader: /cookies & browsing|cookie/i,
       expectedBody: /cookies|browser|preferences/i,
       getUrl: (pom: POM_Legal) => pom.urls.COOKIES,
@@ -71,20 +65,16 @@ test.describe("Steam Footer Links - User Flow", () => {
       // 3. Verify target URL using central POM links
       await expect(targetPage).toHaveURL(item.getUrl(pomLegal));
 
-      // 4. Verify page header content (without using 'body')
+      // 4. Target the explicit aria-role heading to cover standard tags and custom components cleanly
       const pageHeader = targetPage
-        .locator(
-          "h1, h2, h3, .privacy_header_title, .faq_title, .faq_page_header, .faq_header, .help_header, .help_center_header_text, #help_center_header, .page_sub_header, [class*='header']",
-        )
+        .locator("h1, h2, h3, [role='heading'], .privacy_header_title, .faq_title, .faq_page_header, .faq_header")
         .filter({ hasText: item.expectedHeader })
         .first();
       await expect(pageHeader).toBeVisible();
 
-      // 5. Verify page body content using container class with leading underscore (without using 'body')
+      // 5. Replaced the dynamic hashed classes with stable semantic container landmarks
       const pageBody = targetPage
-        .locator(
-          "#main_content, #news_column, .privacy_policy_content, ._2PQsW53YUsH-Z6TICGEF3K, [class*='2PQsW53YUsH']",
-        )
+        .locator("#main_content, #news_column, .privacy_policy_content, #faq_body, [role='main'], main, article")
         .filter({ hasText: item.expectedBody })
         .first();
       await expect(pageBody).toBeVisible();
@@ -129,18 +119,16 @@ test.describe("Steam Footer Links - User Flow", () => {
 
     await expect(targetPage).toHaveURL(pomLegal.urls.PRIVACY_SPANISH);
 
-    // Verify Spanish header (without 'body')
+    // Verify Spanish header using safe heading definitions
     const spanishHeader = targetPage
-      .locator("h1, h2, h3, .privacy_header_title")
+      .locator("h1, h2, h3, [role='heading'], .privacy_header_title")
       .filter({ hasText: /política de privacidad/i })
       .first();
     await expect(spanishHeader).toBeVisible();
 
-    // Verify Spanish body content (without 'body')
+    // Verify Spanish body content using stable structural containers
     const spanishBody = targetPage
-      .locator(
-        "#main_content, .privacy_policy_content, ._2PQsW53YUsH-Z6TICGEF3K",
-      )
+      .locator("#main_content, .privacy_policy_content, [role='main'], main, article")
       .filter({ hasText: /datos personales|información/i })
       .first();
     await expect(spanishBody).toBeVisible();
