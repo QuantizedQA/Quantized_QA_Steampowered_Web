@@ -15,8 +15,7 @@ export class CartPage {
 
     this.emptyCart = page.getByText("Your cart is empty.");
     this.clearCartbtn = page.getByRole("button", { name: "Remove all items" });
-    this.viewCart = page.getByRole("button", { name: /^View My Cart/ });
-
+    this.viewCart = page.getByRole("link", { name: /^View My Cart/ });
     // Get the item region in cart
     this.cartItem = page
       .getByRole("button")
@@ -26,7 +25,7 @@ export class CartPage {
     this.cartItemName = this.cartItem.getByText(itemName);
 
     // Locate cart item price
-    this.cartItemPrice = this.cartItem.getByText(/^\$\d+(\.\d{2})?$/).last();
+    this.cartItemPrice = this.cartItem.getByText(/^\D*\d+[.,]\d{2}\D*$/).last();
   }
 
   // Check if there are items already in cart, if yes, clear the cart
