@@ -40,7 +40,7 @@ export class AddToCartPage {
 
     // Locate the added game's price
     this.confirmedItemPrice = this.confirmationPop
-      .getByText(/^\$\d+(\.\d{2})?$/)
+      .getByText(/\d+([.,]\d{2})?/)
       .last();
   }
 
